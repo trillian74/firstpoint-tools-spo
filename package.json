@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trillian74/firstpoint-tools-spo.git"
+    "url": "https://github.com/trillian74/firstpoint-tools-spo.git"
   },
   "author": "Ole Bergtun",
   "license": "MIT",
