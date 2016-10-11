@@ -1,0 +1,14 @@
+node_modules
+bower_components
+config/_private.conf.json
+src/lib/datatables/
+src/lib/es6-promise/
+src/lib/fontawesome/
+src/lib/jquery/
+src/lib/lodash/
+src/lib/momentjs/
+src/lib/select2/
+src/lib/sp-pnp-js/
+src/lib/whatwg-fetch/
+
+.tmp

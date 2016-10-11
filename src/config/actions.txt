@@ -1,0 +1,17 @@
+{
+    "Id":"a7b23fb8-8240-49d5-b441-8303ee06a323",
+    "Actions": [
+        {
+            "Title": "Distribute tasks",
+            "Id":"3bf91434-95a8-4753-91e5-1eb906413c38"
+        },
+        {
+            "Title": "Create ITP tasks",
+            "Id":"22a90c76-abde-4181-83da-ad801d3cf7f5"
+        },
+        {
+            "Title": "Check yoself",
+            "Id":"0f73e40d-3ac9-4484-b47a-411ac90000e2"
+        }
+    ]
+}

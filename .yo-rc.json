@@ -1,0 +1,20 @@
+{
+  "generator-sppp": {
+    "appname": "bb-tools-man",
+    "appdesc": "",
+    "author": "Ole Bergtun",
+    "siteUrl": "https://beerenberg.sharepoint.com/sites/pilot",
+    "username": "ole.bergtun@beerenberg.onmicrosoft.com",
+    "spRootFolder": "_catalogs/masterpage/spf",
+    "dlRootFolder": "./src",
+    "bowerlibs": [
+      "sp-pnp-js",
+      "jquery",
+      "fontawesome",
+      "datatables",
+      "momentjs",
+      "select2",
+      "lodash"
+    ]
+  }
+}
