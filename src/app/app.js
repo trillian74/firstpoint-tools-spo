@@ -74,24 +74,24 @@ $(document)
 
         //'AssignedToId': {"results": [12] }  //multiple
 
-        // dao
-        //     .web
-        //     .getUser(_spPageContextInfo.userLoginName)
-        //     .then(function (user) {
-        //         console.log(user)
-        //         var newItem = {
-        //             Title: "Test Created Item",
-        //             AssignedToId: {
-        //                 "results": [user.Id]
-        //             }
-        //         };
-        //         list
-        //             .addItem(newItem)
-        //             .then(function (item) {
-        //                 console.log(item)
-        //             });
+        dao
+            .web
+            .getUser(_spPageContextInfo.userLoginName)
+            .then(function (user) {
+                console.log(user)
+                var newItem = {
+                    Title: "Test Created Item",
+                    AssignedToId: {
+                        "results": [user.Id]
+                    }
+                };
+                list
+                    .addItem(newItem)
+                    .then(function (item) {
+                        console.log(item)
+                    });
 
-        //     });
+            });
 
         var $locations = $(".js-data-example-ajax").select2({
             placeholder: {

@@ -1,12 +1,13 @@
-.action-buttons button{
+.action-buttons button {
     margin: 5px;
 }
+
 .mdl-textfield__input {
-    border-bottom: 1px solid rgba(0,0,0,.12) !Important;
+    border-bottom: 1px solid rgba(0, 0, 0, .12) !Important;
     border: 0px !Important;
     display: inline-block;
     font-size: 20px;
-    font-family: "Helvetica","Arial",sans-serif;
+    font-family: "Helvetica", "Arial", sans-serif;
     margin: 0;
     padding: 4px 0 !Important;
     width: 100%;
@@ -16,8 +17,66 @@
 }
 
 .mdl-textfield {
-  
-    width: 532px !Important;
-    border: 1px thin !Important;
+    border-radius: 10px;
+    border: 1px solid #c7cac4;
+    margin: 10px;
 }
 
+#sideNavBox {
+    DISPLAY: block
+}
+
+#contentBox {
+    margin-left: 75px
+}
+
+section {
+    display: flex;
+}
+
+.user-results-container {
+    position: absolute;
+    padding: 8px 0;
+    background-color: rgb(250, 250, 250);
+    border-radius: 0 0 4px 4px;
+    border: 1px dotted #bdc741;
+    box-shadow: 0 0 20px lightgray;
+    z-index: 1;
+    width: 318px;
+    font-size: .9em;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.user-item {
+    padding: 6px 15px;
+}
+
+.user-item:hover {
+    background-color: rgb(230, 230, 230);
+    cursor: pointer;
+}
+
+.user-item-selected,
+.user-item-selected:hover {
+    background-color: #0078d7;
+    color: white;
+    cursor: pointer;
+}
+
+.selected-user-display {
+    max-width: 285px;
+    height: 32px;
+    background-color: rgb(240, 240, 240);
+    border: 1px solid lightgray;
+    display: none;
+    cursor: pointer;
+    /*white-space: nowrap;*/
+    white-space: initial;
+    height: auto;
+}
+
+.selected-user-display i {
+    font-size: 1.1em;
+    margin-right: 3px;
+}
