@@ -1,8 +1,16 @@
-﻿var webAbsoluteUrl = _spPageContextInfo.webAbsoluteUrl;
+﻿'use strict';
+
+var webAbsoluteUrl = _spPageContextInfo.webAbsoluteUrl;
 var doSearch;
 
+
+
+
+
 $(function() {
+    "use strict";
     // Enable NavBar functionallity
+
     InitDatePicker($("#ToolHeader .ms-DatePicker"));
     AddInstallations();
     ShowForm();
@@ -66,6 +74,7 @@ $(function() {
             }
         }).get();
     });
+    tools.consoleMe();
 });
 
 function RemovePeoplePickerValue(element) {
@@ -85,9 +94,18 @@ function RemovePeoplePickerValue(element) {
         .val("");
 }
 
+
+
+function CloseDialog() {
+    $(".people-search").val("");
+    RemovePeoplePickerValue($(".selected-user-display"));
+    $(".ms-Dialog").hide();
+}
+
 function ShowAddUser(id) {
+
+
     tools.currentId = id;
-    event.preventDefault();
     var filteredInputs = $("input:blank:not(:hidden)").map(function() {
         if (this.name.indexOf('task-') !== -1) {
             $(this).css("background-color", "#d83b01");
@@ -103,13 +121,11 @@ function ShowAddUser(id) {
         $(".ms-Dialog").show();
         $(".people-search").focus();
     }
+    e = window.event;
+    var asdf = e.target || e.srcElement;
+    if (e.preventDefault) e.preventDefault();
+    else e.returnValue = false; //IE<9 
 
-}
-
-function CloseDialog() {
-    $(".people-search").val("");
-    RemovePeoplePickerValue($(".selected-user-display"));
-    $(".ms-Dialog").hide();
 }
 
 function TriggerSearchUsers(element) {
@@ -302,18 +318,45 @@ var CreateInstallationCheckBox = function(item, i) {
         "=\"ms-CheckBox-field\" tabindex=\"" + i + "\" aria-checked=\"false\" name=\"" + item.Title + "\"><span class=\"ms-Label ms-fontSize-l\">" + item.Title + "</span></label></div></div>";
 }
 
-function BBTOOLSMAN() {
-    this.Title = 'bb-tools-man';
-    this.locations = [];
-    this.SelectedSites = [];
-    this.currentId = "";
-    this.Sites = [];
-    console.log('bb-tools-man instantiated');
-};
+// function BBTOOLSMAN() {
+//     this.Title = 'bb-tools-man';
+//     this.locations = [];
+//     this.SelectedSites = [];
+//     this.currentId = "";
+//     this.Sites = [];
+//     console.log('bb-tools-man instantiated');
+// };
 
-BBTOOLSMAN.prototype = {
-    constructor: BBTOOLSMAN,
-    removePeoplePickerValue: function(element) {
+var BBTOOLSMAN = class {
+    constructor() {
+        this.Title = 'bb-tools-man';
+        this.locations = [];
+        this.SelectedSites = [];
+        this.currentId = "";
+        this.Sites = [];
+        console.log('bb-tools-man instantiated');
+    }
+    ShowAddUser(id) {
+        tools.currentId = id;
+        event.preventDefault();
+        var filteredInputs = $("input:blank:not(:hidden)").map(function() {
+            if (this.name.indexOf('task-') !== -1) {
+                $(this).css("background-color", "#d83b01");
+                $(this).css("color", "#fff");
+                return this.id;
+            }
+
+        }).get();
+
+        if (filteredInputs.length > 0) {
+            alert("Fyll inn de nødvendige feltene markert med rødt.")
+        } else {
+            $(".ms-Dialog").show();
+            $(".people-search").focus();
+        }
+
+    }
+    removePeoplePickerValue(element) {
         element.hide();
 
         // Reset values
@@ -328,8 +371,8 @@ BBTOOLSMAN.prototype = {
             .parent()
             .find("input[type='hidden']")
             .val("");
-    },
-    setPeoplePickerValue: function(picker, displayName, userPrincipalName) {
+    }
+    setPeoplePickerValue(picker, displayName, userPrincipalName) {
         // Set displayName
         picker
             .find(".selected-user-display")
@@ -351,8 +394,8 @@ BBTOOLSMAN.prototype = {
 
         // Hide the search results container
         $(".user-results-container").remove();
-    },
-    selectUser: function(element) {
+    }
+    selectUser(element) {
         var container = element
             .parent()
             .parent();
@@ -364,8 +407,8 @@ BBTOOLSMAN.prototype = {
             .val();
 
         this.setPeoplePickerValue(container, displayName, userPrincipal);
-    },
-    searchForUsers: function(element) {
+    }
+    searchForUsers(element) {
         var dao = new SPScript.RestDao();
 
         dao
@@ -387,11 +430,11 @@ BBTOOLSMAN.prototype = {
                     tools.selectUser($(this));
                 });
             });
-    },
-    logArrayElements: function(element) {
+    }
+    logArrayElements(element) {
         console.log('locations[' + element.Title + '] = ' + element);
-    },
-    setSelectedSiteInfo: function(params) {
+    }
+    setSelectedSiteInfo(params) {
         if (this.locations.length < 1) {
             alert("Ingen valgte installasjoner...");
             return;
@@ -424,15 +467,15 @@ BBTOOLSMAN.prototype = {
                 });
         });
 
-    },
-    setSelectedSites: function(arr) {
+    }
+    setSelectedSites(arr) {
         this.SelectedSites = arr;
-    },
-    setLocations: function(selectedLocations) {
+    }
+    setLocations(selectedLocations) {
         this.locations = selectedLocations;
-    },
-    findLocationById: function(id) {},
-    addLocation: function(item) {
+    }
+    findLocationById(id) {}
+    addLocation(item) {
         var index = this
             .locations
             .findIndex(function(o) {
@@ -451,8 +494,8 @@ BBTOOLSMAN.prototype = {
                 console.log('locations[' + obj.Id + '] = ' + obj.Title);
             });
         $("#ms-table-selectedlocations").after(this.addInstallationRow({ Id: item.id, Title: item.title, AssignedTo: null }));
-    },
-    removeLocation: function(item) {
+    }
+    removeLocation(item) {
         var index = this
             .locations
             .findIndex(function(o, i) {
@@ -468,8 +511,8 @@ BBTOOLSMAN.prototype = {
                 console.log('locations[' + obj.Id + '] = ' + obj.Title);
             });
         this.removeInstallationRow("." + item.id);
-    },
-    createTasks: function(item) {
+    }
+    createTasks(item) {
         var dao = new SPScript.RestDao();
         var list = dao.lists("TestOppgaver");
 
@@ -481,8 +524,8 @@ BBTOOLSMAN.prototype = {
                 console.log(item)
             });
         console.log("tools-man create tasks");
-    },
-    GetUserId: function(accountName) {
+    }
+    GetUserId(accountName) {
         return new Promise(function(resolve, reject) {
             /// get the site url
             var siteUrl = _spPageContextInfo.siteAbsoluteUrl;
@@ -505,8 +548,8 @@ BBTOOLSMAN.prototype = {
                 }
             });
         });
-    },
-    assignUserTask: function() {
+    }
+    assignUserTask() {
         // Validere felter. Hent verdier fra raden og post en oppgave til listen for den
         // gjeldende side. avslutt med å fjerne raden... kanskje en toast...
         var filteredInputs = $("input:blank").map(function() {
@@ -557,6 +600,7 @@ BBTOOLSMAN.prototype = {
                                     .then(function(item) {
                                         console.log(item);
                                         (item.Title === undefined) ? alert("Noe gikk galt, prøv igjen eller kontakt IT."): tools.removeInstallationRow($("." + tools.currentId));
+                                        CloseDialog();
                                     });
 
                             })
@@ -586,23 +630,24 @@ BBTOOLSMAN.prototype = {
                             .then(function(item) {
                                 console.log(item);
                                 (item.Title === undefined) ? alert("Noe gikk galt, prøv igjen eller kontakt IT."): tools.removeInstallationRow($("." + tools.currentId));
+                                CloseDialog();
                             });
 
                     }
 
                 });
         }
-    },
-    removeInstallationRow: function(title) {
+    }
+    removeInstallationRow(title) {
         $(title).remove();
-    },
-    addInstallationRow: function(item) {
+    }
+    addInstallationRow(item) {
         return "<div class=\"ms-Table-row " + item.Id + "\"><span class=\"ms-Table-cell ms-font-xl\">" + item.Title + "</span><span class=\"ms-Table-cell ms-font-xl\">" + ((item.AssignedTo === null) ?
-            "<button class=\"ms-Button ms-Button--command\" onclick=\"ShowAddUser('" + item.Id + "');\"><span class=\"ms-Button-icon\"><i class=\"ms-Icon ms-Icon--plus\"></i></sp" +
+            "<button type=\"button\" class=\"ms-Button ms-Button--command\" onclick=\"ShowAddUser('" + item.Id + "');\"><span class=\"ms-Button-icon\"><i class=\"ms-Icon ms-Icon--plus\"></i></sp" +
             "an> <span class=\"ms-Button-label\">Tilordnet til</span></button>" :
             item.AssignedTo) + "</span><span class=\"ms-Table-cell ms-font-xl\">" + item.Title + "</span></div>";
-    },
-    reactOnButton: function(button) {
+    }
+    reactOnButton(button) {
         switch (button) {
             case "Distribute tasks":
                 this
@@ -679,12 +724,11 @@ BBTOOLSMAN.prototype = {
         }
 
     }
+    consoleMe() {
+        console.log(this);
+    }
 };
 
-var tools = new BBTOOLSMAN();
-
-// Show the firstName properties of the objects
-console.log('tools is ' + tools.Title); // log
 
 var AddEditOnTables = function(model) {
     $("#items > tbody > tr > td:not(.no-row-click)")
@@ -769,3 +813,4 @@ var FormatNumericInput = function(num) {
         return num.replace(",", ".");
     }
 };
+var tools = new BBTOOLSMAN();

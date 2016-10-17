@@ -5,19 +5,19 @@
                 <%@ Assembly Name="Microsoft.Web.CommandUI, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
                     <%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages" Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
                         <asp:Content ContentPlaceHolderId="PlaceHolderPageTitle" runat="server">
-                            List Demo
+                            Distribuere oppgaver
                         </asp:Content>
                         <asp:Content ContentPlaceHolderId="PlaceHolderAdditionalPageHead" runat="server">
-                            <script type="text/javascript" src="./lib/jquery/dist/jquery.js"></script>
-                            <script type="text/javascript" src="./lib/office-ui-fabric/dist/js/jquery.fabric.js"></script>
-                            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/picker.js"></script>
+                            <script type="text/javascript" src="./lib/jquery/dist/jquery.min.js"></script>
+                            <script type="text/javascript" src="./lib/office-ui-fabric/dist/js/jquery.fabric.min.js"></script>
+
                             <script type="text/javascript" src="./lib/spscripts/spscript.js"></script>
-                            <script type="text/javascript" src="./lib/momentjs/moment.js"></script>
-                            <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
-                            <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.js"></script>
+                            <script type="text/javascript" src="./lib/momentjs/min/moment.min.js"></script>
+                            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+                            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/additional-methods.min.js"></script>
                             <!-- Scripts -->
-                            <link rel="stylesheet" href="//appsforoffice.microsoft.com/fabric/2.6.1/fabric.min.css">
-                            <link rel="stylesheet" href="//appsforoffice.microsoft.com/fabric/2.6.1/fabric.components.min.css">
+                            <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.6.1/fabric.min.css">
+                            <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.6.1/fabric.components.min.css">
 
                             <link rel="stylesheet" href="./styles/custom.css" />
                             <script type="text/javascript">
@@ -296,7 +296,7 @@
 
 
 
-                                <script type="text/javascript" src="./app/_Layout.js"></script>
+                                <script type="text/javascript" src="./dist/distribute-tasks.js"></script>
 
 
                         </asp:Content>
