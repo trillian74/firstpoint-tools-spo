@@ -75,14 +75,22 @@ $(function() {
     });
     tools.consoleMe();
 
-    $("#closeAssignUserTaskButton").click(function() {
-        CloseDialog();
-    });
-    $("#assignUserTaskButton").click(function() {
-        tools.assignUserTask();
-    });
+    function RemovePeoplePickerValue(element) {
+        element.hide();
 
-
+        // Reset values
+        element
+            .parent()
+            .find("input[type='text']")
+            .show()
+            .focus()
+            .select();
+        element
+            .parent()
+            .parent()
+            .find("input[type='hidden']")
+            .val("");
+    }
 
     function ShowAddUser(id) {
 
@@ -100,8 +108,13 @@ $(function() {
             alert("Fyll inn de nødvendige feltene markert med rødt.")
         } else {
             $(".ms-Dialog").show();
+            $("#closeAssignUserTaskButton").click(function() {
+                CloseDialog();
+            })
+            $("#assignUserTaskButton").click(function() {
+                tools.assignUserTask();
+            })
             $(".people-search").focus();
-
         }
         e = window.event;
         var asdf = e.target || e.srcElement;
@@ -119,7 +132,7 @@ $(function() {
 
         clearTimeout(doSearch);
         doSearch = setTimeout(function() {
-            tools.searchForUsers(element, tools);
+            tools.searchForUsers(element);
         }, 250);
     }
 
@@ -387,7 +400,7 @@ class BBTOOLSMAN {
 
         this.setPeoplePickerValue(container, displayName, userPrincipal);
     }
-    searchForUsers(element, ctx) {
+    searchForUsers(element) {
         var dao = new SPScript.RestDao();
 
         dao
@@ -406,7 +419,7 @@ class BBTOOLSMAN {
                 element.after(html);
 
                 $(".user-item").click(function() {
-                    ctx.selectUser($(this));
+                    tools.selectUser($(this));
                 });
             });
     }
@@ -443,7 +456,6 @@ class BBTOOLSMAN {
         this.removeInstallationRow("." + item.id);
     }
     GetUserId(accountName) {
-        var that = this;
         return new Promise(function(resolve, reject) {
             /// get the site url
             var siteUrl = _spPageContextInfo.siteAbsoluteUrl;
@@ -458,16 +470,14 @@ class BBTOOLSMAN {
                 success: function(data) {
                     ///popup user id received from site users.
                     console.log("Received UserId" + data.d.Id);
-                    console.log(this);
-                    console.log(that);
-                    resolve(JSON.stringify(data.d.Id), that);
+                    resolve(JSON.stringify(data.d.Id));
                 },
                 error: function(data) {
                     console.log(JSON.stringify(data));
-                    reject(JSON.stringify(data), that);
+                    reject(JSON.stringify(data));
                 }
             });
-        }.bind(this));
+        });
     }
     assignUserTask() {
         // Validere felter. Hent verdier fra raden og post en oppgave til listen for den
@@ -485,20 +495,20 @@ class BBTOOLSMAN {
             var row = $("." + this.currentId);
             var user = this
                 .GetUserId($(".user-principal").attr("value"))
-                .then(function(id, tools) {
+                .then(function(id) {
                     console.log("goahead create task");
                     var dao = new SPScript.RestDao();
-                    if (this.Sites.length === 0) {
+                    if (tools.Sites.length === 0) {
                         dao
                             .web
                             .subsites()
                             .then(function(sites) {
-                                this.Sites = sites;
+                                tools.Sites = sites;
                                 var sitedetails = $.map(sites, function(site) {
-                                    if (this.currentId === site.Id) {
+                                    if (tools.currentId === site.Id) {
                                         return site;
                                     }
-                                }.bind(this));
+                                });
 
                                 var newItem = {
                                     Title: $("#task-title").val(),
@@ -527,17 +537,17 @@ class BBTOOLSMAN {
                                     .then(function(item) {
                                         console.log(item);
                                         (item.Title === undefined) ?
-                                        alert("Noe gikk galt, prøv igjen eller kontakt IT."): this.removeInstallationRow($("." + this.currentId));
+                                        alert("Noe gikk galt, prøv igjen eller kontakt IT."): tools.removeInstallationRow($("." + tools.currentId));
                                         CloseDialog();
-                                    }.bind(this));
+                                    });
 
-                            }.bind(this));
+                            })
                     } else {
-                        var sitedetails = $.map(this.Sites, function(site) {
-                            if (this.currentId === site.Id) {
+                        var sitedetails = $.map(tools.Sites, function(site) {
+                            if (tools.currentId === site.Id) {
                                 return site;
                             }
-                        }.bind(this));
+                        });
                         var newItem = {
                             Title: $("#task-title").val(),
                             Body: $("#task-description").val(),
@@ -565,12 +575,13 @@ class BBTOOLSMAN {
                             .then(function(item) {
                                 console.log(item);
                                 (item.Title === undefined) ?
-                                alert("Noe gikk galt, prøv igjen eller kontakt IT."): this.removeInstallationRow($("." + this.currentId));
+                                alert("Noe gikk galt, prøv igjen eller kontakt IT."): tools.removeInstallationRow($("." + tools.currentId));
                                 CloseDialog();
-                            }.bind(this));
+                            });
+
                     }
 
-                }.bind(this));
+                });
         }
     }
     removeInstallationRow(title) {
@@ -712,25 +723,8 @@ var CreateInstallationCheckBox = function(item, i) {
         "=\"ms-CheckBox-field\" tabindex=\"" + i + "\" aria-checked=\"false\" name=\"" + item.Title + "\"><span class=\"ms-Label ms-fontSize-l\">" + item.Title + "</span></label></div></div>";
 };
 
-var CloseDialog = function() {
+function CloseDialog() {
     $(".people-search").val("");
     RemovePeoplePickerValue($(".selected-user-display"));
     $(".ms-Dialog").hide();
-};
-
-var RemovePeoplePickerValue = function(element) {
-    element.hide();
-
-    // Reset values
-    element
-        .parent()
-        .find("input[type='text']")
-        .show()
-        .focus()
-        .select();
-    element
-        .parent()
-        .parent()
-        .find("input[type='hidden']")
-        .val("");
 };

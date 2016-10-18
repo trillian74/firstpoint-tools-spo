@@ -285,8 +285,8 @@
                                             </div>
                                             <div class="ms-Dialog-actions">
                                                 <div class="ms-Dialog-actionsRight">
-                                                    <button type="button" onclick="return tools.assignUserTask();" class="ms-Dialog-action ms-Button ms-Button--primary"> <span class="ms-Button-label">Tilordne oppgave</span></button>
-                                                    <button type="button" onclick="CloseDialog();" class="ms-Dialog-action ms-Button"> <span class="ms-Button-label">Cancel</span> </button>
+                                                    <button type="button" id="assignUserTaskButton" class="ms-Dialog-action ms-Button ms-Button--primary"> <span class="ms-Button-label">Tilordne oppgave</span></button>
+                                                    <button type="button" id="closeAssignUserTaskButton" class="ms-Dialog-action ms-Button"> <span class="ms-Button-label">Cancel</span> </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -297,6 +297,8 @@
 
 
                                 <script type="text/javascript" src="./dist/distribute-tasks.js"></script>
+                                <script>
+                                </script>
 
 
                         </asp:Content>
