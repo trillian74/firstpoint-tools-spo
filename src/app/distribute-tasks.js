@@ -560,9 +560,11 @@ class BBTOOLSMAN {
                             .substring(0, _spPageContextInfo.webAbsoluteUrl.indexOf(_spPageContextInfo.webServerRelativeUrl)) + sitedetails[0].ServerRelativeUrl;
                         var dao = new SPScript.RestDao(daoUri);
                         var list = dao.lists("Oppgaver");
+                        ShowSpinner(true);
                         list
                             .addItem(newItem)
                             .then(function(item) {
+                                ShowSpinner(false);
                                 console.log(item);
                                 (item.Title === undefined) ?
                                 alert("Noe gikk galt, prøv igjen eller kontakt IT."): this.removeInstallationRow($("." + this.currentId));
@@ -577,10 +579,10 @@ class BBTOOLSMAN {
         $(title).remove();
     }
     addInstallationRow(item) {
-        return "<div class=\"ms-Table-row " + item.Id + "\"><span class=\"ms-Table-cell ms-font-xl\">" + item.Title + "</span><span class=\"ms-Table-cell ms-font-xl\">" + ((item.AssignedTo === null) ?
-            "<button type=\"button\" class=\"ms-Button ms-Button--command\" id=\"" + item.Id + "\"><span class=\"ms-Button-icon\"><i class=\"ms-Icon ms-Icon--plus\"></i></span>" +
-            " <span class=\"ms-Button-label\">Tilordnet til</span></button>" :
-            item.AssignedTo) + "</span><span class=\"ms-Table-cell ms-font-xl\">" + item.Title + "</span></div>";
+        return "<div class=\"ms-Table-row " + item.Id + "\"><span class=\"ms-Table-cell ms-font-l\">" + item.Title + "</span><span class=\"ms-Table-cell ms-font-l\">" + ((item.AssignedTo === null) ?
+            "<button type=\"button\" class=\"ms-Button ms-Button--command\" id=\"" + item.Id + "\"><span class=\"ms-Button-icon\"><i class=\"ms-Icon ms-Icon--AddFriend\"></i></span>" +
+            " <span class=\"ms-Button-label\">Tilordne</span></button>" :
+            item.AssignedTo) + "</span></div>";
     }
     consoleMe() {
         console.log(this);
@@ -707,10 +709,14 @@ var AddInstallations = function(tools) {
 };
 
 var CreateInstallationCheckBox = function(item, i) {
-    return "<div class=\"ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2\"><div class=\"ms-CheckBox\"" +
+    return "<div class=\"ms-Grid-col ms-u-sm6\"><div class=\"ms-CheckBox\"" +
         "><input tabindex=\"-1\" title=\"" + item.Title + "\" id=\"" + item.Id + "\"  type=\"checkbox\" class=\"ms-CheckBox-input\"><label role=\"checkbox\" class" +
         "=\"ms-CheckBox-field\" tabindex=\"" + i + "\" aria-checked=\"false\" name=\"" + item.Title + "\"><span class=\"ms-Label ms-fontSize-l\">" + item.Title + "</span></label></div></div>";
 };
+
+var ShowSpinner = function (show) {
+    
+}
 
 var CloseDialog = function() {
     $(".people-search").val("");

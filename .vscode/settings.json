@@ -1,11 +1,4 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "search.exclude": {
 
-    },
-    "standardFormat.formatOnSave": false,
-    "fix.onSave": false,
-    "files.autoSave": "off",
-    "typescript.check.tscVersion": false,
-    "typescript.check.workspaceVersion": false
 }
